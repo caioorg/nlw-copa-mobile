@@ -4,6 +4,7 @@ import { Input } from '../components/Input'
 import { Button } from '../components/Button'
 
 export default function Find () {
+
   return (
     <VStack flex={1} bgColor='gray.900'>
       <Header title='Buscar por código' showBackButton />
