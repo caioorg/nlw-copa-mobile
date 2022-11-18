@@ -24,7 +24,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode } ) => {
   const [user, setUser] = useState<UserProps>({} as UserProps)
 
   const [_, response, promptAsync] =  useAuthRequest({
-    expoClientId: '597012181178-oj72q4b59ph1g1kca1v6rr2rfsgk48bc.apps.googleusercontent.com',
+    expoClientId: process.env.CLIENT_ID_AUTH_GOOGLE,
     redirectUri: AuthSession.makeRedirectUri({ useProxy: true }),
     scopes: ['profile', 'email']
   })
@@ -32,12 +32,14 @@ export const AuthContextProvider = ({ children }: { children: ReactNode } ) => {
   async function signInWithGoogle(accessToken: string) {
     try {
       setIsUserLoading(true)
+
       const { data } = await api.post('/users', { accessToken })
       api.defaults.headers.common['Authorization'] = `Bearer ${data.token}`
-    
+
       const userInfo = await api.get('/me')
+
       setUser(userInfo.data.user)
-      
+
     } catch (error) {
       console.log(error)
       throw error;

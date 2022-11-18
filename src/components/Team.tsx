@@ -5,11 +5,13 @@ import { Input } from './Input';
 
 interface Props {
   code: string;
+  value: string
   position: 'left' | 'right';
   onChangeText: (value: string) => void;
 }
 
-export function Team({ code, position, onChangeText }: Props) {
+export function Team({ code, position, value, onChangeText }: Props) {
+
   return (
     <HStack alignItems="center">
       {position === 'left' && <CountryFlag isoCode={code} size={25} style={{ marginRight: 12 }} />}
@@ -19,6 +21,7 @@ export function Team({ code, position, onChangeText }: Props) {
         h={9}
         textAlign="center"
         fontSize="xs"
+        value={String(value)}
         keyboardType="numeric"
         onChangeText={onChangeText}
       />

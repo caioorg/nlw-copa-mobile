@@ -4,6 +4,7 @@ import { useTheme } from 'native-base'
 import New from '../screens/New'
 import Pools from '../screens/Pools'
 import Find from '../screens/Find'
+import Details from '../screens/Details'
 import { Platform } from 'react-native'
 
 const { Navigator, Screen } = createBottomTabNavigator()
@@ -37,7 +38,7 @@ export const AppRoutes = () => {
       <Screen  name='new' component={New} options={{ tabBarLabel: 'Novo bolão', tabBarIcon: ({ color }) => <PlusCircle color={color} size={sizesIcon} />}} />
       <Screen name='pools' component={Pools} options={{ tabBarLabel: 'Meus bolões', tabBarIcon: ({ color }) => <SoccerBall color={color} size={sizesIcon} />}} />
       <Screen name='find' component={Find} options={{ tabBarButton: () => null }} />
+      <Screen name='details' component={Details} options={{ tabBarButton: () => null }} />
     </Navigator>
   )
 }
-

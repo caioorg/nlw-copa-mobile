@@ -1,6 +1,8 @@
 import { Button, HStack, Text, useTheme, VStack } from 'native-base';
 import { X, Check } from 'phosphor-react-native';
 import { getName } from 'country-list';
+import dayjs from 'dayjs'
+import ptBr from 'dayjs/locale/pt-br'
 
 import { Team } from './Team';
 
@@ -17,18 +19,26 @@ export interface GameProps {
   id: string;
   firstTeamCountryCode: string;
   secondTeamCountryCode: string;
+  firstTeamPoints: string;
+  secondTeamPoints: string;
   guess: null | GuessProps;
+  date: string
 };
 
 interface Props {
   data: GameProps;
+  firstTeamPoints: string,
+  secondTeamPoints: string,
   onGuessConfirm: () => void;
   setFirstTeamPoints: (value: string) => void;
   setSecondTeamPoints: (value: string) => void;
 };
 
-export function Game({ data, setFirstTeamPoints, setSecondTeamPoints, onGuessConfirm }: Props) {
+export function Game({ data, setFirstTeamPoints, setSecondTeamPoints, onGuessConfirm, firstTeamPoints, secondTeamPoints }: Props) {
   const { colors, sizes } = useTheme();
+
+  const when = dayjs(data.date).locale(ptBr).format('DD [de] MMMM [de] YYYY [de] HH:mm')
+
 
   return (
     <VStack
@@ -46,13 +56,14 @@ export function Game({ data, setFirstTeamPoints, setSecondTeamPoints, onGuessCon
       </Text>
 
       <Text color="gray.200" fontSize="xs">
-        22 de Novembro de 2022 às 16:00h
+        {when}
       </Text>
 
       <HStack mt={4} w="full" justifyContent="space-between" alignItems="center">
         <Team
           code={data.firstTeamCountryCode}
           position="right"
+          value={data?.guess?.firstTeamPoints ? String(data?.guess?.firstTeamPoints) : ''}
           onChangeText={setFirstTeamPoints}
         />
 
@@ -61,6 +72,7 @@ export function Game({ data, setFirstTeamPoints, setSecondTeamPoints, onGuessCon
         <Team
           code={data.secondTeamCountryCode}
           position="left"
+          value={data?.guess?.secondTeamPoints ? String(data?.guess?.secondTeamPoints) : ''}
           onChangeText={setSecondTeamPoints}
         />
       </HStack>
